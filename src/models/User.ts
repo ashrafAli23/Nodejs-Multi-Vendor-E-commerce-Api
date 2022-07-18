@@ -1,10 +1,11 @@
-import { Schema, model, Document } from "mongoose";
+import { Schema, model, Document, Types } from "mongoose";
 import bcrypt from "bcrypt";
 import { UserRole } from "../enum/role.enum";
 
 export interface IUser extends Document {
   name: string;
   email: string;
+  address?: string;
   password: string;
   role: UserRole;
   photo?: string;
@@ -23,6 +24,10 @@ const userSchema = new Schema(
       required: true,
       trim: true,
       unique: true,
+    },
+    address: {
+      type: Types.ObjectId,
+      ref: "Address",
     },
     password: {
       type: String,
