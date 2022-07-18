@@ -2,7 +2,7 @@ import { model, Document, Schema, Types } from "mongoose";
 
 interface ICart extends Document {
   email: String;
-  cartItems: Types.DocumentArray<string | number>;
+  cartItems: [string];
   totalPrice: number;
   totalQuantity: number;
 }
