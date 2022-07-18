@@ -5,15 +5,19 @@ interface IRating extends Document {
   productId: string;
   rating: number;
   message?: string;
+  ratingsAverage: number;
+  ratingsQuantity: number;
 }
 
 const ratingSchema = new Schema({
   userId: {
     type: Types.ObjectId,
+    ref: "Users",
     required: true,
   },
   productId: {
     type: Types.ObjectId,
+    ref: "Product",
     required: true,
   },
   rating: {
@@ -25,8 +29,18 @@ const ratingSchema = new Schema({
   message: {
     type: String,
   },
+  ratingsAverage: {
+    type: Number,
+    default: 4.5,
+    min: 1,
+    max: 5,
+  },
+  ratingsQuantity: {
+    type: Number,
+    default: 0,
+  },
 });
 
-ratingSchema.index({ userId: 1, productId: 1 }, { unique: true });
+ratingSchema.index({ productId: 1 }, { unique: true });
 
-export default model<IRating>("rating", ratingSchema);
+export default model<IRating>("Rating", ratingSchema);
