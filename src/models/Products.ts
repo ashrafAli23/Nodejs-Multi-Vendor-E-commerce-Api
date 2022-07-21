@@ -1,6 +1,6 @@
 import { Schema, model, Document, Types } from "mongoose";
 
-interface IProduct extends Document {
+export interface IProduct extends Document {
   name: string;
   slug: string;
   description: string;
@@ -11,10 +11,10 @@ interface IProduct extends Document {
   mainImg: string;
   images: [string];
   color?: [string];
-  size?: [string | number];
+  size: [string];
   category: string;
   createdBy: string;
-  isOutOfStock: boolean;
+  isOutOfStock?: boolean;
 }
 
 const productSchema = new Schema(
@@ -64,6 +64,7 @@ const productSchema = new Schema(
       {
         type: Types.ObjectId,
         ref: "Size",
+        required: true,
       },
     ],
     category: {
@@ -83,5 +84,8 @@ const productSchema = new Schema(
   },
   { timestamps: true }
 );
+
+productSchema.index({ createdBy: 1 });
+productSchema.index({ slug: 1 }, { unique: true });
 
 export default model<IProduct>("Product", productSchema);
