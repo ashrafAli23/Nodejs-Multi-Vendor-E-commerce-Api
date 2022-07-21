@@ -1,6 +1,6 @@
 import { Document, Schema, model } from "mongoose";
 
-interface ISize extends Document {
+export interface ISize extends Document {
   size: string;
   weight?: number; //in gram
   length?: number; //in cm
@@ -26,5 +26,7 @@ const sizeSchema = new Schema({
     type: Number,
   },
 });
+
+sizeSchema.index({ size: 1 });
 
 export default model<ISize>("Size", sizeSchema);
