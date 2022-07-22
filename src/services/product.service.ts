@@ -4,26 +4,21 @@ import { NotFoundError } from "../apiResponse/notFoundError";
 import slug from "slugify";
 import { ErrorResponse } from "../apiResponse/errorResponse";
 
-
-
 /**
  * @desc    Query Product Using It's ID
  * @param   { String } id - Product ID
  * @returns { Object<product> }
  */
-export const getProductById = async (id:string):Promise<IProduct> => {
-  const populateQuery = [
-    { path: 'size', select: 'size' }
-  ];
+const getProductById = async (id: string): Promise<IProduct> => {
+  const populateQuery = [{ path: "size", select: "size" }];
 
-  const product = await Products.findById(id)
-    .populate(populateQuery)
+  const product = await Products.findById(id).populate(populateQuery);
 
   if (!product) {
-    throw new NotFoundError("Product not found")
+    throw new NotFoundError("Product not found");
   }
 
-  return product
+  return product;
 };
 
 /**
@@ -133,10 +128,7 @@ const updateProductSize = async (id: string, body: any): Promise<IProduct> => {
  * @param   { Object } body - Body Object
  * @returns { void }
  */
-export const deleteProductSize = async (
-  id: string,
-  body: any
-): Promise<void> => {
+const deleteProductSize = async (id: string, body: any): Promise<void> => {
   const product = await Products.findById(id);
 
   if (!product || product.createdBy !== body.createdBy) {
@@ -162,7 +154,7 @@ export const deleteProductSize = async (
  * @param   { Object } body - Object data
  * @param   {  File  } mainImg - Product main image
  */
-export const updateProductMainImage = async (
+const updateProductMainImage = async (
   id: string,
   body: any,
   mainImg: any
@@ -187,7 +179,7 @@ export const updateProductMainImage = async (
  * @param   { Object } body - Body data
  * @param   { Files } subImages - Product images
  */
-export const updateProductImages = async (
+const updateProductImages = async (
   id: string,
   body: any,
   subImages: any
@@ -213,7 +205,7 @@ export const updateProductImages = async (
  * @param   { String } id - Product ID
  * @param   { Object } body - Body data
  */
-export const deleteProduct = async (id: string, body: any): Promise<void> => {
+const deleteProduct = async (id: string, body: any): Promise<void> => {
   const product = await Products.findById(id);
 
   if (!product || body.createdBy !== product.createdBy) {
@@ -223,14 +215,13 @@ export const deleteProduct = async (id: string, body: any): Promise<void> => {
   await Products.findByIdAndDelete(id);
 };
 
-
 export default {
-getProductById,
-createProduct,
-updateProduct,
-updateProductMainImage,
-updateProductImages,
-updateProductSize,
-deleteProduct,
-deleteProductSize
-}
+  getProductById,
+  createProduct,
+  updateProduct,
+  updateProductMainImage,
+  updateProductImages,
+  updateProductSize,
+  deleteProduct,
+  deleteProductSize,
+};
