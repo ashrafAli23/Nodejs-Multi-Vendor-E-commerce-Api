@@ -1,12 +1,10 @@
 import { model, Types, Document, Schema } from "mongoose";
 
-interface IRating extends Document {
+export interface IRating extends Document {
   userId: string;
   productId: string;
   rating: number;
   message?: string;
-  ratingsAverage: number;
-  ratingsQuantity: number;
 }
 
 const ratingSchema = new Schema({
@@ -29,18 +27,8 @@ const ratingSchema = new Schema({
   message: {
     type: String,
   },
-  ratingsAverage: {
-    type: Number,
-    default: 4.5,
-    min: 1,
-    max: 5,
-  },
-  ratingsQuantity: {
-    type: Number,
-    default: 0,
-  },
 });
 
-ratingSchema.index({ productId: 1 }, { unique: true });
+ratingSchema.index({ productId: 1, userId: 1 });
 
 export default model<IRating>("Rating", ratingSchema);

@@ -15,6 +15,8 @@ export interface IProduct extends Document {
   category: string;
   createdBy: string;
   isOutOfStock?: boolean;
+  ratingsAverage:number;
+  ratingsQuantity:number;
 }
 
 const productSchema = new Schema(
@@ -81,6 +83,16 @@ const productSchema = new Schema(
       type: Boolean,
       default: false,
     },
+	ratingsAverage: {
+    type: Number,
+    default: 4.5,
+    min: 1,
+    max: 5,
+  },
+  ratingsQuantity: {
+    type: Number,
+    default: 0,
+  },
   },
   { timestamps: true }
 );
