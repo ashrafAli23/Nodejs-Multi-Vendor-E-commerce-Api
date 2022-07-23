@@ -1,8 +1,8 @@
 import { Document, model, Schema, Types } from "mongoose";
 
-interface IWishlist extends Document {
+export interface IWishlist extends Document {
   user: string;
-  product: [string];
+  products: string[];
 }
 
 const wishlistSchema = new Schema({
@@ -11,7 +11,7 @@ const wishlistSchema = new Schema({
     ref: "Users",
     required: true,
   },
-  product: [
+  products: [
     {
       type: Types.ObjectId,
       ref: "Product",
@@ -19,5 +19,7 @@ const wishlistSchema = new Schema({
     },
   ],
 });
+
+wishlistSchema.index({ user: 1 }, { unique: true });
 
 export default model<IWishlist>("Wishlist", wishlistSchema);
