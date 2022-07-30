@@ -5,7 +5,7 @@ export interface IToken extends Document {
   token: string;
   user: string;
   expires: Date;
-  type: TokenTypes;
+  type: string;
 }
 
 const tokenSchema = new Schema(
@@ -24,8 +24,7 @@ const tokenSchema = new Schema(
     },
     type: {
       type: String,
-      enum: Object.keys(TokenTypes),
-      default: TokenTypes.REFRESH,
+      required: true,
     },
   },
   { timestamps: true }
