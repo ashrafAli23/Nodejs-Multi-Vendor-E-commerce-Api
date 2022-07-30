@@ -71,15 +71,13 @@ const saveToken = async (
   userId: string,
   type: TokenTypes,
   expires: moment.Moment
-): Promise<IToken> => {
-  const tokenDoc = await TokenModel.create({
+): Promise<void> => {
+  await TokenModel.create({
     token,
     user: userId,
-    type,
     expires: expires.toDate(),
+    type,
   });
-
-  return tokenDoc;
 };
 
 /**
