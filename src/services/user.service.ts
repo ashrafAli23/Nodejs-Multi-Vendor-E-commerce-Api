@@ -15,7 +15,7 @@ const createUser = async (body: IUser): Promise<IUser> => {
   const isEmailTaken = await UserModel.findOne({ email });
 
   //   Check if email already taken
-  if (!isEmailTaken) {
+  if (isEmailTaken) {
     throw new ErrorResponse("Email already taken");
   }
 
