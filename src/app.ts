@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import { NotFoundError } from "./apiResponse/notFoundError";
 import errorHandler from "./middleware/errorHandler";
+import v1Routes from "./routes/V1/index";
 
 // middlewares
 import cookieParser from "cookie-parser";
@@ -29,8 +30,10 @@ app.use(limiter);
 // app.use(passport.initialize());
 // passportMiddle(passport);
 
+app.use("/api/v1", v1Routes);
+
 // catch all routes
-app.all("*", async (req: Request, res: Response) => {
+app.all("*", (req: Request, res: Response) => {
   throw new NotFoundError(`Route[${req.method}::${req.url}] not found!`);
 });
 
